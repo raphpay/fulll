@@ -21,6 +21,7 @@ function App(): React.JSX.Element {
   const [searchText, setSearchText] = useState<string>('');
   const [numberOfItemsSelected, setNumberOfItemsSelected] = useState<number>(0);
   const [users, setUsers] = useState<IUser[]>([]);
+  const [selectedUserIDs, setSelectedUserIDs] = useState<string[]>([]);
 
   async function onChangeText(text: string) {
     setSearchText(text);
@@ -55,7 +56,13 @@ function App(): React.JSX.Element {
       <FlatList
         style={styles.scrollView}
         data={users}
-        renderItem={renderItem => <ListItem user={renderItem.item} />}
+        renderItem={renderItem => (
+          <ListItem
+            user={renderItem.item}
+            selectedUserIDs={selectedUserIDs}
+            setSelectedUserIDs={setSelectedUserIDs}
+          />
+        )}
         keyExtractor={item => item.id}
       />
     </SafeAreaView>
