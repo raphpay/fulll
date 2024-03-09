@@ -1,8 +1,14 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import IUser from '../../business-logic/model/IUser';
 import styles from '../assets/styles/components/ListItemStyles';
 
-function ListItem(): React.JSX.Element {
+type ListItemProps = {
+  user: IUser;
+};
+
+function ListItem(props: ListItemProps): React.JSX.Element {
+  const {user} = props;
   const checkmarkFill = require('../assets/images/checkmark.square.fill.png');
   const checkmarkEmpty = require('../assets/images/square.png');
 
@@ -11,8 +17,8 @@ function ListItem(): React.JSX.Element {
       <Image source={checkmarkEmpty} style={styles.checkmarkIcon} />
       <View style={styles.avatarContainer}>
         <View style={styles.avatar} />
-        <Text>ID</Text>
-        <Text>Login</Text>
+        <Text>ID: {user.id}</Text>
+        <Text>Login {user.login}</Text>
       </View>
       <TouchableOpacity style={styles.profileButton}>
         <Text>View Profile</Text>

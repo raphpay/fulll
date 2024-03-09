@@ -1,22 +1,32 @@
 import React, { useState } from 'react';
 import {
+  FlatList,
   Image,
   SafeAreaView,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import APIService from './src/business-logic/APIService';
+import IUser from './src/business-logic/model/IUser';
 import styles from './src/ui/assets/styles/AppStyles';
 import ListItem from './src/ui/components/ListItem';
 
 function App(): React.JSX.Element {
   const docIcon = require('./src/ui/assets/images/doc.on.doc.png');
   const trashIcon = require('./src/ui/assets/images/trash.png');
+  const peopleIcon = require('./src/ui/assets/images/person.2.fill.png');
 
   const [searchText, setSearchText] = useState<string>('');
   const [numberOfItemsSelected, setNumberOfItemsSelected] = useState<number>(0);
+  const [users, setUsers] = useState<IUser[]>([]);
+
+  async function onChangeText(text: string) {
+    setSearchText(text);
+    const apiUsers = await APIService.getUsers(text);
+    setUsers(apiUsers);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,7 +36,7 @@ function App(): React.JSX.Element {
       <View style={styles.textInputContainer}>
         <TextInput
           value={searchText}
-          onChangeText={setSearchText}
+          onChangeText={onChangeText}
           placeholder={'Search Input'}
           style={styles.searchInput}
         />
@@ -42,9 +52,12 @@ function App(): React.JSX.Element {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView style={styles.scrollView}>
-        <ListItem />
-      </ScrollView>
+      <FlatList
+        style={styles.scrollView}
+        data={users}
+        renderItem={renderItem => <ListItem user={renderItem.item} />}
+        keyExtractor={item => item.id}
+      />
     </SafeAreaView>
   );
 }
