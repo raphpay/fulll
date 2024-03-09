@@ -1,11 +1,13 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import styles from './src/ui/assets/styles/AppStyles';
 
 function App(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
-      {/* Add your components here */}
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Github Search</Text>
+      </View>
     </SafeAreaView>
   );
 }
