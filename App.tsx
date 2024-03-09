@@ -11,6 +11,7 @@ import {
 import APIService from './src/business-logic/APIService';
 import IUser from './src/business-logic/model/IUser';
 import styles from './src/ui/assets/styles/AppStyles';
+import ContentUnavailableView from './src/ui/components/ContentUnavailableView';
 import ListItem from './src/ui/components/ListItem';
 
 function App(): React.JSX.Element {
@@ -25,8 +26,12 @@ function App(): React.JSX.Element {
 
   async function onChangeText(text: string) {
     setSearchText(text);
-    const apiUsers = await APIService.getUsers(text);
-    setUsers(apiUsers);
+    if (text.length === 0) {
+      setUsers([]);
+    } else {
+      const apiUsers = await APIService.getUsers(text);
+      setUsers(apiUsers);
+    }
   }
 
   return (
@@ -53,18 +58,26 @@ function App(): React.JSX.Element {
           </TouchableOpacity>
         </View>
       </View>
-      <FlatList
-        style={styles.scrollView}
-        data={users}
-        renderItem={renderItem => (
-          <ListItem
-            user={renderItem.item}
-            selectedUserIDs={selectedUserIDs}
-            setSelectedUserIDs={setSelectedUserIDs}
-          />
-        )}
-        keyExtractor={item => item.id}
-      />
+      {users.length === 0 ? (
+        <ContentUnavailableView
+          title={'No user searched'}
+          message={'Search for a user'}
+          image={<Image source={peopleIcon} />}
+        />
+      ) : (
+        <FlatList
+          style={styles.scrollView}
+          data={users}
+          renderItem={renderItem => (
+            <ListItem
+              user={renderItem.item}
+              selectedUserIDs={selectedUserIDs}
+              setSelectedUserIDs={setSelectedUserIDs}
+            />
+          )}
+          keyExtractor={item => item.id}
+        />
+      )}
     </SafeAreaView>
   );
 }
