@@ -9,12 +9,11 @@ import {
   View,
 } from 'react-native';
 import styles from './src/ui/assets/styles/AppStyles';
+import ListItem from './src/ui/components/ListItem';
 
 function App(): React.JSX.Element {
   const docIcon = require('./src/ui/assets/images/doc.on.doc.png');
   const trashIcon = require('./src/ui/assets/images/trash.png');
-  const checkmarkFill = require('./src/ui/assets/images/checkmark.square.fill.png');
-  const checkmarkEmpty = require('./src/ui/assets/images/square.png');
 
   const [searchText, setSearchText] = useState<string>('');
   const [numberOfItemsSelected, setNumberOfItemsSelected] = useState<number>(0);
@@ -44,17 +43,7 @@ function App(): React.JSX.Element {
         </View>
       </View>
       <ScrollView style={styles.scrollView}>
-        <View style={styles.listItem}>
-          <Image source={checkmarkEmpty} style={styles.checkmarkIcon} />
-          <View style={styles.avatarContainer}>
-            <View style={styles.avatar} />
-            <Text>ID</Text>
-            <Text>Login</Text>
-          </View>
-          <TouchableOpacity style={styles.profileButton}>
-            <Text>View Profile</Text>
-          </TouchableOpacity>
-        </View>
+        <ListItem />
       </ScrollView>
     </SafeAreaView>
   );
