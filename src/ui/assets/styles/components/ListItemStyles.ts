@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 8,
+    marginVertical: 8,
   },
   avatarContainer: {
     alignItems: 'center',
