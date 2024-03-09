@@ -73,6 +73,8 @@ function App(): React.JSX.Element {
               user={renderItem.item}
               selectedUserIDs={selectedUserIDs}
               setSelectedUserIDs={setSelectedUserIDs}
+              numberOfItemsSelected={numberOfItemsSelected}
+              setNumberOfItemsSelected={setNumberOfItemsSelected}
             />
           )}
           keyExtractor={item => item.id}

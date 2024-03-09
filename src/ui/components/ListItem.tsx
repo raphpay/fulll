@@ -7,10 +7,18 @@ type ListItemProps = {
   user: IUser;
   selectedUserIDs: string[];
   setSelectedUserIDs: React.Dispatch<React.SetStateAction<string[]>>;
+  numberOfItemsSelected: number;
+  setNumberOfItemsSelected: React.Dispatch<React.SetStateAction<number>>;
 };
 
 function ListItem(props: ListItemProps): React.JSX.Element {
-  const {user, selectedUserIDs, setSelectedUserIDs} = props;
+  const {
+    user,
+    selectedUserIDs,
+    setSelectedUserIDs,
+    numberOfItemsSelected,
+    setNumberOfItemsSelected,
+  } = props;
   const checkmarkFill = require('../assets/images/checkmark.square.fill.png');
   const checkmarkEmpty = require('../assets/images/square.png');
   const [isUserSelected, setIsUserSelected] = useState<boolean>(false);
@@ -20,10 +28,11 @@ function ListItem(props: ListItemProps): React.JSX.Element {
     if (selectedUserIDs && selectedUserIDs.includes(user.id)) {
       const index = newArray.indexOf(user.id);
       newArray.splice(index, 1);
+      setNumberOfItemsSelected(numberOfItemsSelected - 1);
       setIsUserSelected(false);
     } else {
-      console.log('2');
       newArray.push(user.id);
+      setNumberOfItemsSelected(numberOfItemsSelected + 1);
       setIsUserSelected(true);
     }
     setSelectedUserIDs(newArray);
