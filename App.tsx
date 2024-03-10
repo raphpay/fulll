@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   SafeAreaView,
@@ -29,8 +30,13 @@ function App(): React.JSX.Element {
     if (text.length === 0) {
       setUsers([]);
     } else {
-      const apiUsers = await APIService.getUsers(text);
-      setUsers(apiUsers);
+      try {
+        const apiUsers = await APIService.getUsers(text);
+        setUsers(apiUsers);
+      } catch (error) {
+        const castedError = error as Error;
+        Alert.alert('An error occured', castedError.message);
+      }
     }
   }
 
