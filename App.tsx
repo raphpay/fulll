@@ -40,7 +40,13 @@ function App(): React.JSX.Element {
     }
   }
 
-  function duplicateItems() {}
+  function duplicateItems() {
+    const originalArray = selectedUsers;
+    const selectedDuplicatesArray = originalArray.concat(originalArray);
+    const duplicatedArray = [...originalArray, ...users];
+    setSelectedUsers(selectedDuplicatesArray);
+    setUsers(duplicatedArray);
+  }
 
   function removeItems() {}
 
