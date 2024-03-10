@@ -5,8 +5,8 @@ import styles from '../assets/styles/components/ListItemStyles';
 
 type ListItemProps = {
   user: IUser;
-  selectedUserIDs: string[];
-  setSelectedUserIDs: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedUsers: IUser[];
+  setSelectedUsers: React.Dispatch<React.SetStateAction<IUser[]>>;
   numberOfItemsSelected: number;
   setNumberOfItemsSelected: React.Dispatch<React.SetStateAction<number>>;
 };
@@ -14,8 +14,8 @@ type ListItemProps = {
 function ListItem(props: ListItemProps): React.JSX.Element {
   const {
     user,
-    selectedUserIDs,
-    setSelectedUserIDs,
+    selectedUsers,
+    setSelectedUsers,
     numberOfItemsSelected,
     setNumberOfItemsSelected,
   } = props;
@@ -24,18 +24,18 @@ function ListItem(props: ListItemProps): React.JSX.Element {
   const [isUserSelected, setIsUserSelected] = useState<boolean>(false);
 
   function toggleUserSelection() {
-    let newArray: string[] = selectedUserIDs;
-    if (selectedUserIDs && selectedUserIDs.includes(user.id)) {
-      const index = newArray.indexOf(user.id);
+    let newArray: IUser[] = selectedUsers;
+    if (selectedUsers && selectedUsers.includes(user)) {
+      const index = newArray.indexOf(user);
       newArray.splice(index, 1);
       setNumberOfItemsSelected(numberOfItemsSelected - 1);
       setIsUserSelected(false);
     } else {
-      newArray.push(user.id);
+      newArray.push(user);
       setNumberOfItemsSelected(numberOfItemsSelected + 1);
       setIsUserSelected(true);
     }
-    setSelectedUserIDs(newArray);
+    setSelectedUsers(newArray);
   }
 
   return (

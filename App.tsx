@@ -22,7 +22,7 @@ function App(): React.JSX.Element {
   const [searchText, setSearchText] = useState<string>('');
   const [numberOfItemsSelected, setNumberOfItemsSelected] = useState<number>(0);
   const [users, setUsers] = useState<IUser[]>([]);
-  const [selectedUserIDs, setSelectedUserIDs] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<IUser[]>([]);
 
   async function onChangeText(text: string) {
     setSearchText(text);
@@ -33,6 +33,10 @@ function App(): React.JSX.Element {
       setUsers(apiUsers);
     }
   }
+
+  function duplicateItems() {}
+
+  function removeItems() {}
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,10 +54,10 @@ function App(): React.JSX.Element {
       <View style={styles.scrollViewHeader}>
         <Text>{numberOfItemsSelected} elements selected</Text>
         <View style={styles.iconContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={duplicateItems}>
             <Image source={docIcon} style={styles.smallIcon} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={removeItems}>
             <Image source={trashIcon} style={styles.smallIcon} />
           </TouchableOpacity>
         </View>
@@ -71,8 +75,8 @@ function App(): React.JSX.Element {
           renderItem={renderItem => (
             <ListItem
               user={renderItem.item}
-              selectedUserIDs={selectedUserIDs}
-              setSelectedUserIDs={setSelectedUserIDs}
+              selectedUsers={selectedUsers}
+              setSelectedUsers={setSelectedUsers}
               numberOfItemsSelected={numberOfItemsSelected}
               setNumberOfItemsSelected={setNumberOfItemsSelected}
             />
