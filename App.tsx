@@ -19,11 +19,13 @@ function App(): React.JSX.Element {
   const docIcon = require('./src/ui/assets/images/doc.on.doc.png');
   const trashIcon = require('./src/ui/assets/images/trash.png');
   const peopleIcon = require('./src/ui/assets/images/person.2.fill.png');
+  const editIcon = require('./src/ui/assets/images/square.and.pencil.png');
 
   const [searchText, setSearchText] = useState<string>('');
   const [numberOfItemsSelected, setNumberOfItemsSelected] = useState<number>(0);
   const [users, setUsers] = useState<IUser[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<IUser[]>([]);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   async function onChangeText(text: string) {
     setSearchText(text);
@@ -45,6 +47,7 @@ function App(): React.JSX.Element {
     const selectedDuplicatesArray = originalArray.concat(originalArray);
     const duplicatedArray = [...originalArray, ...users];
     setSelectedUsers(selectedDuplicatesArray);
+    setNumberOfItemsSelected(selectedUsers.length);
     setUsers(duplicatedArray);
   }
 
@@ -55,6 +58,7 @@ function App(): React.JSX.Element {
       originalArray.splice(indexToRemove, 1);
     }
     setSelectedUsers([]);
+    setNumberOfItemsSelected(selectedUsers.length);
     setUsers(originalArray);
   }
 
@@ -74,11 +78,18 @@ function App(): React.JSX.Element {
       <View style={styles.scrollViewHeader}>
         <Text>{numberOfItemsSelected} elements selected</Text>
         <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={duplicateItems}>
-            <Image source={docIcon} style={styles.smallIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={removeItems}>
-            <Image source={trashIcon} style={styles.smallIcon} />
+          {isEditing && (
+            <>
+              <TouchableOpacity onPress={duplicateItems}>
+                <Image source={docIcon} style={styles.smallIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={removeItems}>
+                <Image source={trashIcon} style={styles.smallIcon} />
+              </TouchableOpacity>
+            </>
+          )}
+          <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
+            <Image source={editIcon} style={styles.smallIcon} />
           </TouchableOpacity>
         </View>
       </View>
@@ -99,6 +110,7 @@ function App(): React.JSX.Element {
               setSelectedUsers={setSelectedUsers}
               numberOfItemsSelected={numberOfItemsSelected}
               setNumberOfItemsSelected={setNumberOfItemsSelected}
+              isEditing={isEditing}
             />
           )}
           keyExtractor={item => item.id}

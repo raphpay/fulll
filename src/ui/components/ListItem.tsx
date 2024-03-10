@@ -9,6 +9,7 @@ type ListItemProps = {
   setSelectedUsers: React.Dispatch<React.SetStateAction<IUser[]>>;
   numberOfItemsSelected: number;
   setNumberOfItemsSelected: React.Dispatch<React.SetStateAction<number>>;
+  isEditing: boolean;
 };
 
 function ListItem(props: ListItemProps): React.JSX.Element {
@@ -18,6 +19,7 @@ function ListItem(props: ListItemProps): React.JSX.Element {
     setSelectedUsers,
     numberOfItemsSelected,
     setNumberOfItemsSelected,
+    isEditing,
   } = props;
   const checkmarkFill = require('../assets/images/checkmark.square.fill.png');
   const checkmarkEmpty = require('../assets/images/square.png');
@@ -40,14 +42,16 @@ function ListItem(props: ListItemProps): React.JSX.Element {
 
   return (
     <View style={styles.listItem}>
-      <TouchableOpacity
-        style={styles.checkmarkIcon}
-        onPress={toggleUserSelection}>
-        <Image
-          source={isUserSelected ? checkmarkFill : checkmarkEmpty}
+      {isEditing && (
+        <TouchableOpacity
           style={styles.checkmarkIcon}
-        />
-      </TouchableOpacity>
+          onPress={toggleUserSelection}>
+          <Image
+            source={isUserSelected ? checkmarkFill : checkmarkEmpty}
+            style={styles.checkmarkIcon}
+          />
+        </TouchableOpacity>
+      )}
       <View style={styles.avatarContainer}>
         <View style={styles.avatar} />
         <Text>ID: {user.id}</Text>
