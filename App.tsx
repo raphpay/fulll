@@ -48,7 +48,15 @@ function App(): React.JSX.Element {
     setUsers(duplicatedArray);
   }
 
-  function removeItems() {}
+  function removeItems() {
+    const originalArray = users;
+    for (const userToRemove of selectedUsers) {
+      const indexToRemove = originalArray.indexOf(userToRemove);
+      originalArray.splice(indexToRemove, 1);
+    }
+    setSelectedUsers([]);
+    setUsers(originalArray);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
