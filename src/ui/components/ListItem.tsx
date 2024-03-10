@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
 import IUser from '../../business-logic/model/IUser';
+
 import styles from '../assets/styles/components/ListItemStyles';
+
+import IconButton from './IconButton';
 
 type ListItemProps = {
   user: IUser;
@@ -43,14 +47,11 @@ function ListItem(props: ListItemProps): React.JSX.Element {
   return (
     <View style={styles.listItem}>
       {isEditing && (
-        <TouchableOpacity
-          style={styles.checkmarkIcon}
-          onPress={toggleUserSelection}>
-          <Image
-            source={isUserSelected ? checkmarkFill : checkmarkEmpty}
-            style={styles.checkmarkIcon}
-          />
-        </TouchableOpacity>
+        <IconButton
+          iconSource={isUserSelected ? checkmarkFill : checkmarkEmpty}
+          action={toggleUserSelection}
+          containerStyle={styles.checkmarkIcon}
+        />
       )}
       <View style={styles.avatarContainer}>
         <View style={styles.avatar} />

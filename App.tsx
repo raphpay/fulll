@@ -6,13 +6,16 @@ import {
   SafeAreaView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
+
 import APIService from './src/business-logic/APIService';
 import IUser from './src/business-logic/model/IUser';
+
 import styles from './src/ui/assets/styles/AppStyles';
+
 import ContentUnavailableView from './src/ui/components/ContentUnavailableView';
+import IconButton from './src/ui/components/IconButton';
 import ListItem from './src/ui/components/ListItem';
 
 function App(): React.JSX.Element {
@@ -80,17 +83,15 @@ function App(): React.JSX.Element {
         <View style={styles.iconContainer}>
           {isEditing && (
             <>
-              <TouchableOpacity onPress={duplicateItems}>
-                <Image source={docIcon} style={styles.smallIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={removeItems}>
-                <Image source={trashIcon} style={styles.smallIcon} />
-              </TouchableOpacity>
+              <IconButton iconSource={docIcon} action={duplicateItems} />
+              <IconButton iconSource={trashIcon} action={removeItems} />
             </>
           )}
-          <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
-            <Image source={editIcon} style={styles.smallIcon} />
-          </TouchableOpacity>
+
+          <IconButton
+            iconSource={editIcon}
+            action={() => setIsEditing(!isEditing)}
+          />
         </View>
       </View>
       {users.length === 0 ? (
