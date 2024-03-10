@@ -14,7 +14,12 @@ class APIService {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        if (response.status === 403 || 429) {
+          // See https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#exceeding-the-rate-limit
+          throw new Error('API Rate limit exceeded! Please try again later.');
+        } else {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
       }
       const githubResponse = (await response.json()) as IGithubResponse;
       const users = this.extractUsers(githubResponse);
