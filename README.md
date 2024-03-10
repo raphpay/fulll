@@ -1,4 +1,3 @@
-```markdown
 # Github Search App
 
 ## Overview
